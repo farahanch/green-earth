@@ -5,10 +5,10 @@
 => map creates a new array with changed values. foreach()  runs a function for each item. filter() creates a new array
 
 3) What are arrow functions in ES6?
-=> 
+=> shortcut way to write function.
 
 4) How does destructuring assignment work in ES6?
-=> 
+=> i think it allows to take values from arrays or objects.
 
 5) Explain template literals in ES6. How are they different from string concatenation?
-=> 
+=> mainly its a way to add multi line strings like adding variables inside strings.

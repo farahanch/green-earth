@@ -174,3 +174,64 @@ function setModalBox(id) {
             });
         });
 }
+
+// add to cart
+function add_to_cart(id) {
+    fetch(`https://openapi.programming-hero.com/api/plant/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            if (!cart[data.plants.id]) {
+                cart[data.plants.id] = {
+                    id: data.plants.id,
+                    name: data.plants.name,
+                    price: data.plants.price,
+                    qty: 0
+                }
+            }
+            if (cart[data.plants.id]) {
+                cart[data.plants.id].qty += 1;
+            }
+            document.getElementById('cart_list').innerHTML = '';
+            let total = 0;
+            for (let i = 0; i < cart.length; i++) {
+                if (cart[i]) {
+                    document.getElementById('cart_list').innerHTML += `                <div class="bg-gray-100 rounded-md flex justify-between p-4 my-4">
+                    <div>
+                        <p>${cart[i].name}</p>
+                        <p>${cart[i].price} x ${cart[i].qty}</p>
+                    </div>
+                    <p class="py-4 text-red-500 cursor-pointer" onClick="delete_item(${cart[i].id})">X</p>
+                </div>`;
+
+                    total = total + (cart[i].price * cart[i].qty);
+                }
+            }
+            document.getElementById('total').innerHTML = total;
+        });
+
+}
+
+//calculation
+function delete_item(id) {
+    for (let i = cart.length - 1; i >= 0; i--) {
+        if (cart[i] && (cart[i].id === id)) {
+            cart.splice(i, 1);
+        }
+    }
+    document.getElementById('cart_list').innerHTML = '';
+    let total = 0;
+    for (let i = 0; i < cart.length; i++) {
+        if (cart[i]) {
+            document.getElementById('cart_list').innerHTML += `                <div class="bg-gray-100 rounded-md flex justify-between p-4 my-4">
+                    <div>
+                        <p>${cart[i].name}</p>
+                        <p>${cart[i].price} x ${cart[i].qty}</p>
+                    </div>
+                    <p class="py-4 text-red-500 cursor-pointer" onClick="delete_item(${cart[i].id})">X</p>
+                </div>`;
+
+            total = total + (cart[i].price * cart[i].qty);
+        }
+    }
+    document.getElementById('total').innerHTML = total;
+}
