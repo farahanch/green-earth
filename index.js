@@ -34,3 +34,14 @@ const loader_spiner = `<div class="bg-white shadow-lg rounded-lg p-4 animate-pul
                     <div class="bg-gray-300 h-8 w-full rounded"></div>
                 </div>`;
 document.getElementById("trees").innerHTML = loader_spiner;
+
+// categories
+fetch('https://openapi.programming-hero.com/api/categories')
+    .then(response => response.json())
+    .then(data => {
+        const cat = document.getElementById("category");
+        for (let i = 0; i < data.categories.length; i++) {
+            const temp = `<button class="rounded text-black-700 py-2 px-4 w-full cursor-pointer categories" id="${data.categories[i].id}" onClick="show_category(this)">${data.categories[i].category_name}</button>`
+            cat.innerHTML += temp;
+        }
+    });
